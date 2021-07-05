@@ -13,6 +13,7 @@ SRC_URI = " \
 S = "${WORKDIR}"
 
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev"
+#PACKAGES = "${PN} ${PN}-doc ${PN}-dev ${PN}-dbg ${PN}-staticdev"
 
 RDEPENDS_${PN}-staticdev = ""
 RDEPENDS_${PN}-dev = ""
@@ -25,7 +26,16 @@ do_compile() {
 }
  
 do_install() {
-    install -d ${D}${libdir}
+    # create the /usr/bin within the rfs with default permissions(-d)
+    install -d ${D}${libdir} 
+
+    # create the /usr/include within the rfs with default
+    install -d ${D}${includedir}
+
+    # install the library to /usr/bin 
     install -m 0644 libmy.a ${D}${libdir}
+
+    # install the header to /usr/bin 
+    install -m 0644 myheader.h ${D}${includedir}
 }
 
